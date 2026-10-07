@@ -528,7 +528,7 @@
 .cta p {
   color: #c5e4df;
 }
-.cta .button {
+.cta .cta__action {
   margin: 27px 0 18px;
 }
 .cta small {
@@ -598,9 +598,12 @@
     flex-wrap: wrap;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .public-header {
     height: 68px;
+  }
+  .public-header__actions {
+    gap: 12px;
   }
   .public-header__actions .text-link {
     display: none;

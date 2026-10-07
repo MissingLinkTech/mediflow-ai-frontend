@@ -317,7 +317,7 @@ function CtaSection() {
         </span>
         <h2>A clearer health journey starts here.</h2>
         <p>Get thoughtful, easy-to-understand health information when you need it.</p>
-        <Button asChild variant="light" size="lg" className="my-[27px] max-sm:w-full">
+        <Button asChild variant="light" size="lg" className="cta__action max-sm:w-full">
           <Link href={ROUTES.signup}>
             Create your free account <ArrowRight aria-hidden="true" />
           </Link>

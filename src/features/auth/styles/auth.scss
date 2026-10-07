@@ -1,6 +1,7 @@
 // Authentication page layout and supporting visual treatment.
 .auth-page {
   min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: minmax(430px, 0.92fr) 1.08fr;
   position: relative;
@@ -20,11 +21,11 @@
 }
 .auth-panel {
   display: grid;
-  place-items: center;
   padding: 105px 50px 60px;
 }
 .auth-panel__inner {
   width: min(100%, 410px);
+  margin: auto;
 }
 .auth-heading {
   text-align: center;
@@ -129,13 +130,29 @@
   color: #d6ece8;
   font-size: 12px;
 }
+.trust-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.5;
+}
+.trust-row svg {
+  flex-shrink: 0;
+}
 .auth-back {
   position: absolute;
   z-index: 2;
   right: 35px;
   bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: #b9dad5;
   font-size: 12px;
+  line-height: 1.5;
+}
+.auth-back svg {
+  flex-shrink: 0;
 }
 .form-placeholder {
   height: 280px;
@@ -158,9 +175,6 @@
   }
 }
 @media (max-width: 430px) {
-  .auth-panel {
-    place-items: start center;
-  }
   .auth-heading h1 {
     font-size: 30px;
   }
@@ -184,8 +198,7 @@
 
   .auth-aside {
     background:
-      radial-gradient(circle at 78% 18%, rgba(87, 179, 162, 0.16), transparent 25%),
-      #0b4e48;
+      radial-gradient(circle at 78% 18%, rgba(87, 179, 162, 0.16), transparent 25%), #0b4e48;
   }
 
   .form-placeholder {
