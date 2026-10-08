@@ -20,6 +20,7 @@ import { Brand } from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ROUTES } from "@/constants/routes";
+import { HeaderAuthActions } from "./header-auth-actions";
 
 const features = [
   {
@@ -56,14 +57,7 @@ export function PublicHeader() {
         </nav>
         <div className="public-header__actions">
           <ThemeToggle />
-          <Link href={ROUTES.login} className="text-link">
-            Log in
-          </Link>
-          <Button asChild size="sm">
-            <Link href={ROUTES.signup}>
-              Try MediFlow <ArrowRight aria-hidden="true" />
-            </Link>
-          </Button>
+          <HeaderAuthActions />
         </div>
       </div>
     </header>

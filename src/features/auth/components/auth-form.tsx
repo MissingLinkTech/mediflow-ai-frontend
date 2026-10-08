@@ -2,12 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ROUTES, safeRedirectPath } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { errorMessage } from "@/lib/api/error";
 import {
   loginSchema,
@@ -19,7 +19,6 @@ import { useLogin, useSignup } from "../hooks/use-auth-mutations";
 
 export function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const mutation = useLogin();
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -27,7 +26,7 @@ export function LoginForm() {
   });
   const submit = form.handleSubmit((values) =>
     mutation.mutate(values, {
-      onSuccess: () => router.replace(safeRedirectPath(searchParams.get("redirect"))),
+      onSuccess: () => router.replace(ROUTES.home),
     }),
   );
   return (
@@ -67,7 +66,7 @@ export function SignupForm() {
     defaultValues: { name: "", email: "", password: "" },
   });
   const submit = form.handleSubmit((values) =>
-    mutation.mutate(values, { onSuccess: () => router.replace(ROUTES.app) }),
+    mutation.mutate(values, { onSuccess: () => router.replace(ROUTES.home) }),
   );
   return (
     <form onSubmit={submit} className="auth-form" noValidate>

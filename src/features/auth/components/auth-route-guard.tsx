@@ -9,7 +9,7 @@ export function AuthRouteGuard({ children }: { children: ReactNode }) {
   const { status } = useAuth();
   const router = useRouter();
   useEffect(() => {
-    if (status === "authenticated") router.replace(ROUTES.app);
+    if (status === "authenticated") router.replace(ROUTES.home);
   }, [router, status]);
   return children;
 }

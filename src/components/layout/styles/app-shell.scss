@@ -132,6 +132,9 @@
   margin-left: auto;
 }
 .icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 35px;
   height: 35px;
   border: 1px solid #e0eae8;
@@ -172,6 +175,9 @@
   text-overflow: ellipsis;
 }
 .user-menu button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   margin-left: 6px;
   padding: 7px;
   color: var(--primary);
@@ -180,6 +186,7 @@
   cursor: pointer;
   font-size: 10px;
   font-weight: 700;
+  white-space: nowrap;
 }
 .menu-button {
   display: none;
