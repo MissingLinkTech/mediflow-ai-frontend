@@ -8,28 +8,38 @@ import { tokenStore } from "@/lib/api/token-store";
 import { authApi } from "../api/auth.api";
 import type { AuthPayload, AuthStatus } from "../types/auth.types";
 
+export type SessionEndReason = "signed-out" | "expired";
+
 interface AuthContextValue {
   status: AuthStatus;
+  /** Why the session ended: explicit sign-out vs. passive expiry. */
+  sessionEndReason: SessionEndReason | null;
   establishSession: (payload: AuthPayload) => void;
-  endSession: () => void;
+  endSession: (reason?: SessionEndReason) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("initializing");
+  const [sessionEndReason, setSessionEndReason] = useState<SessionEndReason | null>(null);
   const queryClient = useQueryClient();
 
-  const endSession = useCallback(() => {
-    tokenStore.set(null);
-    queryClient.removeQueries({ queryKey: queryKeys.account.all });
-    setStatus("unauthenticated");
-  }, [queryClient]);
+  const endSession = useCallback(
+    (reason: SessionEndReason = "expired") => {
+      tokenStore.set(null);
+      queryClient.removeQueries({ queryKey: queryKeys.account.all });
+      setSessionEndReason(reason);
+      setStatus("unauthenticated");
+    },
+    [queryClient],
+  );
 
   const establishSession = useCallback(
     (payload: AuthPayload) => {
       tokenStore.set(payload.accessToken);
       queryClient.setQueryData(queryKeys.account.profile(), payload.user);
+      setSessionEndReason(null);
       setStatus("authenticated");
     },
     [queryClient],
@@ -50,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     void bootstrap();
-    const onExpired = () => endSession();
+    const onExpired = () => endSession("expired");
     window.addEventListener("mediflow:auth-expired", onExpired);
     return () => {
       active = false;
@@ -59,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [endSession, queryClient]);
 
   return (
-    <AuthContext.Provider value={{ status, establishSession, endSession }}>
+    <AuthContext.Provider value={{ status, sessionEndReason, establishSession, endSession }}>
       {children}
     </AuthContext.Provider>
   );

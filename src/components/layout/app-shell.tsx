@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import { Bell, LoaderCircle, LogOut, Menu, Sparkles } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { Brand } from "@/components/shared/brand";
 import { NavIcon } from "@/components/shared/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { navigationForRole } from "@/constants/navigation";
-import { ROUTES } from "@/constants/routes";
+import { LOGIN_REDIRECT_PARAM, ROUTES } from "@/constants/routes";
 import { useAuth } from "@/features/auth/components/auth-provider";
 import { useLogout } from "@/features/auth/hooks/use-auth-mutations";
 import { useCurrentUser } from "@/features/auth/hooks/use-current-user";
@@ -135,13 +135,26 @@ function AppHeader({ name, email }: { name: string | null; email: string }) {
   );
 }
 export function AppShell({ children }: { children: ReactNode }) {
-  const { status } = useAuth();
+  const { status, sessionEndReason } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { data: user } = useCurrentUser();
   useEffect(() => {
-    if (status === "unauthenticated")
-      router.replace(`${ROUTES.login}?redirect=${encodeURIComponent(ROUTES.app)}`);
-  }, [router, status]);
+    if (status !== "unauthenticated") return;
+    // Explicit sign-out: land on a clean /login. A `redirect` parameter here
+    // would imply "sign back in to return", contradicting the user's choice
+    // to leave and risking bounce-back loops.
+    if (sessionEndReason === "signed-out") {
+      router.replace(ROUTES.login);
+      return;
+    }
+    // Passive session loss (expiry / missing cookies): preserve where the
+    // user was so the next sign-in can return them there.
+    const search = searchParams.toString();
+    const current = `${pathname}${search ? `?${search}` : ""}`;
+    router.replace(`${ROUTES.login}?${LOGIN_REDIRECT_PARAM}=${encodeURIComponent(current)}`);
+  }, [router, status, sessionEndReason, pathname, searchParams]);
   if (status !== "authenticated" || !user) return <ShellSkeleton />;
   const displayName = user.settings.displayName || user.name || user.email;
   return (

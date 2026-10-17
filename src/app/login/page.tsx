@@ -6,12 +6,15 @@ import { AuthRouteGuard } from "@/features/auth/components/auth-route-guard";
 export const metadata: Metadata = { title: "Sign in" };
 export default function LoginPage() {
   return (
-    <AuthRouteGuard>
-      <AuthLayout title="Welcome back" description="Sign in to continue to your health workspace.">
-        <Suspense fallback={<div className="form-placeholder" />}>
+    <Suspense fallback={<div className="form-placeholder" />}>
+      <AuthRouteGuard>
+        <AuthLayout
+          title="Welcome back"
+          description="Sign in to continue to your health workspace."
+        >
           <LoginForm />
-        </Suspense>
-      </AuthLayout>
-    </AuthRouteGuard>
+        </AuthLayout>
+      </AuthRouteGuard>
+    </Suspense>
   );
 }

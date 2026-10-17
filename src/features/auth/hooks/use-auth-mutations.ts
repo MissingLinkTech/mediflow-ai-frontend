@@ -16,5 +16,7 @@ export function useSignup() {
 
 export function useLogout() {
   const { endSession } = useAuth();
-  return useMutation({ mutationFn: authApi.logout, onSettled: endSession });
+  // Wrap explicitly: TanStack passes (data, error, ...) to onSettled, which
+  // must not leak into endSession's reason parameter.
+  return useMutation({ mutationFn: authApi.logout, onSettled: () => endSession("signed-out") });
 }
