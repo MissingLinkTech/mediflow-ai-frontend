@@ -3,6 +3,7 @@ import {
   FileText,
   History,
   House,
+  Settings,
   ShieldCheck,
   Sparkles,
   Users,
@@ -17,6 +18,7 @@ const icons: Record<string, LucideIcon> = {
   people: Users,
   history: History,
   shield: ShieldCheck,
+  settings: Settings,
 };
 
 export function NavIcon({ name }: { name: string }) {

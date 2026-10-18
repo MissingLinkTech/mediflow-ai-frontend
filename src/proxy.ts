@@ -16,4 +16,4 @@ export function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/app/:path*"] };
+export const config = { matcher: ["/chat/:path*", "/settings/:path*", "/admin/:path*"] };

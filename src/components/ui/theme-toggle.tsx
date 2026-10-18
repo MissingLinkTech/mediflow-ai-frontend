@@ -9,7 +9,11 @@ import { Button } from "./button";
 const subscribe = () => () => undefined;
 
 export function ThemeToggle({ className }: { className?: string }) {
-  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = mounted && resolvedTheme === "dark";
 

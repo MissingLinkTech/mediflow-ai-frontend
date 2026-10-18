@@ -12,15 +12,9 @@ import { LOGIN_REDIRECT_PARAM, ROUTES } from "@/constants/routes";
 import { useAuth } from "@/features/auth/components/auth-provider";
 import { useLogout } from "@/features/auth/hooks/use-auth-mutations";
 import { useCurrentUser } from "@/features/auth/hooks/use-current-user";
+import { getInitials } from "@/lib/utils";
 import { useUiStore } from "@/store/ui-store";
 
-function initials(name: string | null, email: string) {
-  return (name?.trim() || email)
-    .split(/[\s@]+/)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("");
-}
 function ShellSkeleton() {
   return (
     <main className="shell-loading" aria-label="Restoring your session">
@@ -65,7 +59,12 @@ function Sidebar({ userName, role }: { userName: string; role: "user" | "admin" 
                 key={item.label}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={pathname === item.href ? "is-active" : ""}
+                className={
+                  pathname === item.href ||
+                  (item.href !== ROUTES.home && pathname.startsWith(`${item.href}/`))
+                    ? "is-active"
+                    : ""
+                }
               >
                 <NavIcon name={item.icon} />
                 <span>{item.label}</span>
@@ -110,7 +109,7 @@ function AppHeader({ name, email }: { name: string | null; email: string }) {
           <Bell size={16} />
         </button>
         <div className="user-menu">
-          <span className="avatar">{initials(name, email)}</span>
+          <span className="avatar">{getInitials(name, email)}</span>
           <div>
             <b>{name || "MediFlow member"}</b>
             <small>{email}</small>

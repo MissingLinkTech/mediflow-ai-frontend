@@ -1,5 +1,8 @@
 "use client";
+
+import Link from "next/link";
 import { FileHeart, FileText, Info, Library, Plus, Sparkles } from "lucide-react";
+import { ROUTES } from "@/constants/routes";
 import { useCurrentUser } from "@/features/auth/hooks/use-current-user";
 export function DashboardFoundation() {
   const { data: user } = useCurrentUser();
@@ -54,16 +57,20 @@ export function DashboardFoundation() {
         </div>
       </div>
       <div className="module-grid">
-        <article>
-          <span>
-            <Sparkles size={18} />
-          </span>
-          <div>
-            <h3>AI health conversations</h3>
-            <p>Clear, contextual explanations for your health questions.</p>
-          </div>
-          <small>Coming soon</small>
-        </article>
+        <Link href={ROUTES.chat} className="block transition-transform hover:-translate-y-1">
+          <article className="h-full">
+            <span>
+              <Sparkles size={18} />
+            </span>
+            <div>
+              <h3>AI health conversations</h3>
+              <p>Clear, contextual explanations for your health questions.</p>
+            </div>
+            <small className="font-semibold text-[#0c766b] dark:text-[#49b8a6]">
+              Start conversation →
+            </small>
+          </article>
+        </Link>
         <article>
           <span>
             <FileText size={18} />

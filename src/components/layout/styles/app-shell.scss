@@ -2,6 +2,7 @@
 .app-shell {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   background: #f5f8f7;
 }
 .sidebar {
@@ -104,8 +105,11 @@
 }
 .app-shell__body {
   width: calc(100% - 255px);
-  min-height: 100vh;
   margin-left: 255px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .app-header {
   height: 76px;
@@ -206,6 +210,10 @@
 }
 .app-content {
   padding: 38px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .dashboard {
   max-width: 1180px;

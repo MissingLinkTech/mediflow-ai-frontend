@@ -46,14 +46,19 @@ export function LoginForm() {
         error={form.formState.errors.email?.message}
         {...form.register("email")}
       />
-      <Input
-        label="Password"
-        type="password"
-        autoComplete="current-password"
-        placeholder="Enter your password"
-        error={form.formState.errors.password?.message}
-        {...form.register("password")}
-      />
+      <div className="auth-form__password-row">
+        <Input
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          placeholder="Enter your password"
+          error={form.formState.errors.password?.message}
+          {...form.register("password")}
+        />
+        <Link href={ROUTES.forgotPassword} className="auth-form__forgot">
+          Forgot password?
+        </Link>
+      </div>
       <Button type="submit" loading={mutation.isPending} className="w-full">
         Sign in securely
       </Button>

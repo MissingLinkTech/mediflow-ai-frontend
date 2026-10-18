@@ -12,7 +12,7 @@ export function HeaderAuthActions() {
   if (status === "authenticated") {
     return (
       <Button asChild size="sm">
-        <Link href={ROUTES.app}>
+        <Link href={ROUTES.home}>
           Open workspace <ArrowRight aria-hidden="true" />
         </Link>
       </Button>

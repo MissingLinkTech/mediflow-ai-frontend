@@ -13,6 +13,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Use Tailwind CSS for styling and shadcn-compatible primitives from `src/components/ui` for shared UI.
 - Use SCSS only when Tailwind utilities would make complex styling difficult to maintain. Colocate a dedicated `.scss` file with each feature or layout module; keep global SCSS limited to shared tokens and base rules.
 - Every new surface and reusable component must support both light and dark themes through the shared `next-themes` provider and `.dark` design tokens.
-- Use Lucide icons (`lucide-react`), the icon library configured for shadcn. Do not use emoji, Unicode symbols, or hand-authored SVG paths as interface icons.
 - Run `npm run check` after code changes. Prettier owns formatting; ESLint owns correctness and code quality. Do not add formatting rules that conflict with Prettier.
 - When a feature or architectural convention changes, update this file and keep `README.md` concise and current.
+
+## Phase 2 Chat Conventions
+
+- Chat features reside under `src/features/chat/` (types, schemas, api, hooks, components, styles).
+- BFF route handlers under `src/app/api/chat/` proxy requests to the backend (`/chats`, `/chats/:id`, `/chats/:id/messages`) forwarding auth tokens.
+- Chat UI is hosted under `/chat`, `/chat/[id]`, and `/chat?sessionId=[id]`, all rendering a shared two-pane layout.
+- Optimistic updates are used for sending messages with pending assistant placeholders and failure retry states.

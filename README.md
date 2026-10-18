@@ -16,4 +16,6 @@ Runs on `http://localhost:5080` by default. Change `PORT` in `.env.local` when n
 
 Authentication uses a Next.js BFF: refresh tokens stay in a secure HttpOnly cookie and access tokens remain in memory.
 
+AI Chat experience runs at `/chat` and `/chat/[id]`, connecting through BFF proxy handlers to the NestJS multi-provider AI engine (Gemini, Groq, OpenAI) with optimistic updates and consultation session management.
+
 Run `npm run check` before handing off changes.
